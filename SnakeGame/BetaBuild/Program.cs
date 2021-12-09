@@ -24,7 +24,7 @@ namespace BetaBuild
             Console.ResetColor();
 
             Console.SetCursorPosition(28, 29); Console.Write("Created by: Bondar B. 2021");
-            Console.ReadKey();
+            Console.ReadKey(true);
             Console.Clear();
 
         }
@@ -45,11 +45,11 @@ namespace BetaBuild
             Console.SetCursorPosition(17, 11); Console.Write("  W  W    A   A   SSSSS     T     EEEEE   DDDD");
 
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.SetCursorPosition(32, 13); Console.Write($"YOUR SCORE: {points}");
+            Console.SetCursorPosition(33, 13); Console.Write($"YOUR SCORE: {points}");
             Console.ResetColor();
 
             Console.SetCursorPosition(35, 15); Console.Write("Try Again?");
-            Console.SetCursorPosition(28, 17); Console.Write("Y - Yes / ANY KEY - Exit");
+            Console.SetCursorPosition(31, 17); Console.Write("Y - Yes / N - Exit");
         }
     }
     enum MoveDirection
@@ -166,12 +166,13 @@ namespace BetaBuild
         public void UpdateScore()
         {
             score++;
-            Console.SetCursorPosition(7, 0); // место для очков
+            Console.SetCursorPosition(8, 0); // место для очков
             Console.WriteLine(score);
         }
         public void TryAgain()
         {
-            ConsoleKey answer = Console.ReadKey().Key;
+            ConsoleKey answer = Console.ReadKey(true).Key; //true в ReadKey позволяет не отображать символ в
+            // консоли
 
             switch (answer)
             {
@@ -183,9 +184,14 @@ namespace BetaBuild
                         Launcher();
                         break; 
                     }
-                default:
+                case ConsoleKey.N:
                     {
                         runGame = false;
+                        break;
+                    }
+                default:
+                    {
+                        TryAgain();
                         break;
                     }
             }
@@ -307,6 +313,8 @@ namespace BetaBuild
         {
             Logic play = new Logic();
             play.Launcher();
+            //Console.SetWindowSize(UserInterface.fieldWidth, UserInterface.fieldHeight);
+            //new UserInterface().EndScreen(7);
         }
     }
 }
