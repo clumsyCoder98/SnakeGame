@@ -5,27 +5,47 @@ namespace Game
 {
     class Snake
     {
-        List<Segment> snake;
-        char snakeIcon = '*';
-        public List<Segment> SnakeBody { get { return snake; } }
-        public char SnakeIcon { get { return snakeIcon; } }
-        public Snake()
+        readonly char snakeFragment = '*';
+        List<Point> body;
+        public Snake(Point point)
         {
-            snake = new List<Segment>()
-            { new Segment (40,15)}; // положение головы при старте
-            snake.Add((Segment)snake[0].Clone());
+            body = new List<Point> { point };
+            body.Add(body[0].Clone());
         }
+        public List<Point> Body
+        {
+            get
+            {
+                return body;
+            }
+        }
+
         public bool BiteSelf()
         {
-            bool gameOver = false;
-            for (int i = 1; i < snake.Count; i++)
+            bool isBitten = false;
+            for (int i = 1; i < body.Count; i++)
             {
-                if (snake[0] == snake[i])
+                if (body[0] == body[i])
                 {
-                    gameOver = true;
+                    isBitten = true;
                 }
             }
-            return gameOver;
+            return isBitten;
+        }
+        public void DrawSnake()
+        {
+            for (int snakePart = 0; snakePart < body.Count; snakePart++)
+            {
+                Console.SetCursorPosition(body[snakePart].X, body[snakePart].Y);
+                if (snakePart + 1 < body.Count)
+                {
+                    Console.Write(snakeFragment);
+                }
+                else
+                {
+                    Console.Write(' ');
+                }
+            }
         }
     }
 }

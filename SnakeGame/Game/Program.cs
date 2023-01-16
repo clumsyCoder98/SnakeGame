@@ -5,8 +5,8 @@ namespace Game
     {
         static void Main(string[] args)
         {
-            Logic play = new Logic();
-            play.Launcher();
+            Game game = new Game();
+            game.Run();
         }
     }
 }

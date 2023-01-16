@@ -4,29 +4,28 @@ namespace Game
 {
     class Food
     {
-        char foodIcon = 'O';
-        Segment foodPosition;
-        bool isEaten;
-        public char FoodIcon { get { return foodIcon; } }
-        public Segment FoodPosition { get { return foodPosition; } }
-        public bool IsEaten { get { return isEaten; } }
-        Random posGen = new Random();
-        public Food()
+        readonly char foodIcon = 'O';
+        public Food(Point place)
         {
-            foodPosition = new Segment(10, 15);
-            isEaten = false;
+            FoodPosition = place;
         }
-        public void UpdatePosition()
+        public bool IsEaten
+        { get; set; }
+        public Point FoodPosition
+        { get; set; }
+
+        public void UpdatePosition(Point place)
         {
-            foodPosition.X = posGen.Next(0, UserInterface.fieldWidth);
-            foodPosition.Y = posGen.Next(3, UserInterface.fieldHeight); // 3 поскольку 2 строки заняты интерфейсом
+            FoodPosition = place;
+            PlaceFood();
         }
         public void PlaceFood()
         {
-            Console.SetCursorPosition(foodPosition.X, foodPosition.Y);
+            Console.SetCursorPosition(FoodPosition.X, FoodPosition.Y);
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write(foodIcon);
             Console.ResetColor();
         }
+        //TODO: mb create an event that invoke PlaceFood and Update metod when food eaten is Game class;
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 namespace Game
 {
-    enum MoveDirection
+    enum SnakeMoveDirection
     {
         UP,
         DOWN,

@@ -4,11 +4,34 @@ namespace Game
 {
     class UserInterface
     {
-        public static readonly int fieldWidth = 80;
-        public static readonly int fieldHeight = 30;
+        public int InterfaceHeight { get; }
+        public int Score { get; set; }
+        readonly string scoreRow = "Score: ";
+        public UserInterface(int height)
+        {
+            InterfaceHeight = height;
+            Score = 0;
+        }
+        //TODO: add highscores chart that save scores
+        public void SetInterface()
+        {
+            Console.SetCursorPosition(0, 0);
+            Console.Write(scoreRow + Score);
+            Console.SetCursorPosition(0, InterfaceHeight - 1);
+            Console.Write(new string('=', Console.WindowWidth));
+        }
+        //TODO: maybe make async UpdateScore
+        /*public async Task UpdateScoreAsync()
+        {
+            await UpdateScore();
+        }*/
+        public void UpdateScore()
+        {
+            Console.SetCursorPosition(scoreRow.Length, 0);
+            Console.Write(++Score);
+        }
         public void TitleScreen()
         {
-            Console.SetWindowSize(fieldWidth, fieldHeight);
             Console.CursorVisible = false;
             Console.SetCursorPosition(23, 0); Console.WriteLine("SSSSS  N   N    AAA    K   K   EEEEE");
             Console.SetCursorPosition(23, 1); Console.WriteLine("S      NN  N   A   A   K  K    E  ");
@@ -21,29 +44,24 @@ namespace Game
             Console.WriteLine("PRESS ANY KEY TO START");
             Console.ResetColor();
 
-            Console.SetCursorPosition(28, 29); Console.Write("Created by: Bondar B. 2021");
+            Console.SetCursorPosition(28, 28); Console.Write("Created by: Bondar B. (2021)");
+            Console.SetCursorPosition(34, 29); Console.Write("ver. 2.0 (2023)");
             Console.ReadKey(true);
             Console.Clear();
 
         }
-        public void Interface()
-        {
-            Console.Write($"Score: 0");
-            Console.SetCursorPosition(0, 1);
-            Console.Write(new string('=', Console.WindowWidth));
-        }
-        public void EndScreen(int points)
+        public void EndScreen()
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.SetCursorPosition(17, 7); Console.Write("W     W    AAA    SSSSS   TTTTT   EEEEE   DDDD");
+            Console.SetCursorPosition(17, 7); Console.Write(@"W     W    AAA    SSSSS   TTTTT   EEEEE   DDDD");
             Console.SetCursorPosition(17, 8); Console.Write("W     W   A   A   S         T     E       D   D");
             Console.SetCursorPosition(17, 9); Console.Write("W  W  W   A   A   SSSSS     T     EEEEE   D   D");
             Console.SetCursorPosition(17, 10); Console.Write("W  W  W   AAAAA       S     T     E       D   D");
             Console.SetCursorPosition(17, 11); Console.Write("  W  W    A   A   SSSSS     T     EEEEE   DDDD");
 
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.SetCursorPosition(33, 13); Console.Write($"YOUR SCORE: {points}");
+            Console.SetCursorPosition(33, 13); Console.Write($"YOUR SCORE: {Score}");
             Console.ResetColor();
 
             Console.SetCursorPosition(35, 15); Console.Write("Try Again?");
